@@ -1,66 +1,75 @@
 <div class="container">
+      <br><br>
+        <div class="row">
+          <form [formGroup]="form">
 
-  <div class="row">
-    <form [formGroup]="form">
-      <div class="col">
-        <label>Tipo de material</label>
-        <select formControlName="tpMaterial" class="form-control">
-          <option [value]="0.03">Acero (Tubos soldados)</option>
-          <option [value]="0.0024">Acero (Tubos estirados)</option>
-          <option [value]="0.06">Acero galvanizado</option>
-          <option [value]="0.015">Cobre o laton</option>
-        </select>
+            <div class="input-group mb-3 p-2 bg-light border">
+              <label class="input-group-text btn btn-primary" for="inputGroupSelect01">Options</label>
+              <select formControlName="tpMaterial" class="form-control">
+                <option selected>Tipo de material</option>
+                <option [value]="0.03">Acero (Tubos soldados)</option>
+                <option [value]="0.0024">Acero (Tubos estirados)</option>
+                <option [value]="0.06">Acero galvanizado</option>
+                <option [value]="0.015">Cobre o laton</option>
+              </select>
+            </div>
+      
+            <div class="input-group mb-3 p-2 bg-light border">
+              <span class="input-group-text btn btn-primary" >Diametro del tubo</span>
+              <input type="number" formControlName="diametro" class="form-control">
+            </div>
+
+            <div class="input-group mb-3 p-2 bg-light border">
+              <span class="input-group-text btn btn-primary" >Caudal del flujo</span>
+              <input type="number" formControlName="caudal" class="form-control">
+            </div>
+
+            <div class="input-group mb-3 p-2 bg-light border">
+              <span class="input-group-text btn btn-primary" >Error tolerado</span>
+              <input type="number" formControlName="error" class="form-control">
+            </div>
+
+            <div class="input-group mb-3 p-2 bg-light border">
+              <span class="input-group-text btn btn-primary" >Xi</span>
+              <input type="number" formControlName="xi" class="form-control">
+            </div>
+
+            <div class="input-group mb-3 p-2 bg-light border">
+              <span class="input-group-text btn btn-primary" >Xu</span>
+              <input type="number" formControlName="xu" class="form-control">
+            </div>
+            
+            <div class="d-grid gap-2 col-6 mx-auto">
+              <button (click)="submit()" class="btn btn-outline-dark position-relative">Enviar</button>
+            </div>
+            
+          </form>
+        </div>
       </div>
-
-      <div class="col">
-        <div>
-          <label>Diametro del tubo</label>
-          <input type="number" formControlName="diametro" class="form-control">
-
-        </div>
-        <div class="col">
-          <label>Caudal del flujo</label>
-          <input type="number" formControlName="caudal" class="form-control">
-        </div>
-        <div class="col">
-          <label>Error tolerado</label>
-          <input type="number" formControlName="error" class="form-control">
-        </div>
-        <div class="col">
-          <label>Xi</label>
-          <input type="number" formControlName="xi" class="form-control">
-        </div>
-        <div class="col">
-          <label>Xu</label>
-          <input type="number" formControlName="xu" class="form-control">
-        </div>
+        
+      
+        <h3>resultado: {{result}}</h3>
+      
+        <table class="table table-dark table-striped" *ngIf="response">
+          <thead>
+          <th>it</th>
+          <th>xi</th>
+          <th>xu</th>
+          <th>xr</th>
+          <th>Fx(xi)</th>
+          <th>Fx(xr)</th>
+          <th>Fx(xi) * Fx(xr)</th>
+          </thead>
+          <tbody>
+          <tr *ngFor="let iter of iterations;last as i">
+            <td>{{iter.it}}</td>
+            <td>{{iter.xi}}</td>
+            <td>{{iter.xu}}</td>
+            <td [ngClass]="{'last': i }">{{iter.xr}}</td>
+            <td>{{iter.fxi}}</td>
+            <td>{{iter.fxr}}</td>
+            <td>{{iter.fxiFxr}}</td>
+          </tr>
+          </tbody>
+        </table>
       </div>
-      <button (click)="submit()" class="btn btn-primary">Enviar</button>
-    </form>
-  </div>
-
-  <h3>resultado: {{result}}</h3>
-
-  <table class="table table-primary table-bordered" *ngIf="response">
-    <thead>
-    <th>it</th>
-    <th>xi</th>
-    <th>xu</th>
-    <th>xr</th>
-    <th>Fx(xi)</th>
-    <th>Fx(xr)</th>
-    <th>Fx(xi) * Fx(xr)</th>
-    </thead>
-    <tbody>
-    <tr *ngFor="let iter of iterations;last as i">
-      <td>{{iter.it}}</td>
-      <td>{{iter.xi}}</td>
-      <td>{{iter.xu}}</td>
-      <td [ngClass]="{'last': i }">{{iter.xr}}</td>
-      <td>{{iter.fxi}}</td>
-      <td>{{iter.fxr}}</td>
-      <td>{{iter.fxiFxr}}</td>
-    </tr>
-    </tbody>
-  </table>
-</div>
