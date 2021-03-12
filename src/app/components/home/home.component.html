@@ -2,76 +2,84 @@
 
   <div class="row">
     <form [formGroup]="form">
-      <div class="col">
-        <div class="form-group">
-          <label>Tipo de material</label>
+      <br><br>
+      <div class="input-group mb-3 p-2 bg-light border">
+          <label class="input-group-text btn btn-primary" for="inputGroupSelect01">Formula</label>
           <select formControlName="tpFormula" class="form-control">
             <option [value]="1">Biseccion</option>
             <option [value]="2">falsa posicion </option>
             <option [value]="3">Newton Rapson</option>
           </select>
-        </div>
       </div>
-      <div class="col">
-        <div class="form-group">
-          <label>Tipo de material</label>
+
+      <div class="input-group mb-3 p-2 bg-light border">
+          <label class="input-group-text btn btn-primary" for="inputGroupSelect01">Tipo de material</label>
           <select formControlName="tpMaterial" class="form-control">
             <option [value]="0.03">Acero (Tubos soldados)</option>
             <option [value]="0.0024">Acero (Tubos estirados)</option>
             <option [value]="0.06">Acero galvanizado</option>
             <option [value]="0.015">Cobre o laton</option>
           </select>
-        </div>
       </div>
 
-      <div class="col">
-        <div>
-          <label>Diametro del tubo (mm)</label>
+        <div class="input-group mb-3 p-2 bg-light border">
+          <span class="input-group-text btn btn-primary" >Diametro del tubo</span>
           <input type="number" formControlName="diametro" class="form-control">
-
         </div>
-        <div class="col">
-          <label>Caudal del flujo (m3/s)</label>
+
+        <div class="input-group mb-3 p-2 bg-light border">
+          <span class="input-group-text btn btn-primary" >Caudal del flujo</span>
           <input type="number" formControlName="caudal" class="form-control">
         </div>
-        <div class="col">
-          <label>Velocidad del fluido (m/s)</label>
+
+        <div class="input-group mb-3 p-2 bg-light border">
+          <span class="input-group-text btn btn-primary" >Velocidad del fluido (m/s)</span>
           <input type="number" formControlName="velocidad" class="form-control">
         </div>
-        <div class="col">
-          <label>Error tolerado</label>
+        
+        <div class="input-group mb-3 p-2 bg-light border">
+          <span class="input-group-text btn btn-primary" >Error tolerado</span>
           <input type="number" formControlName="error" class="form-control">
         </div>
-        <div class="col" *ngIf="form.value.tpFormula == '1'">
-          <label>Xi</label>
+        
+        <div class="input-group mb-3 p-2 bg-light border" *ngIf="form.value.tpFormula == '1'">
+          <span class="input-group-text btn btn-primary" >Xi</span>
           <input type="number" formControlName="xi" class="form-control">
         </div>
-        <div class="col" *ngIf="form.value.tpFormula == '1'">
-          <label>Xu</label>
+
+        <div class="input-group mb-3 p-2 bg-light border" *ngIf="form.value.tpFormula == '1'">
+          <span class="input-group-text btn btn-primary" >Xu</span>
           <input type="number" formControlName="xu" class="form-control">
         </div>
-        <div class="col" *ngIf="form.value.tpFormula == '2'">
-          <label>Xa</label>
+
+        <div class="input-group mb-3 p-2 bg-light border" *ngIf="form.value.tpFormula == '2'">
+          <span class="input-group-text btn btn-primary" >Xa</span>
           <input type="number" formControlName="xa" class="form-control">
         </div>
-        <div class="col" *ngIf="form.value.tpFormula == '2'">
-          <label>Xb</label>
+
+        <div class="input-group mb-3 p-2 bg-light border" *ngIf="form.value.tpFormula == '2'">
+          <span class="input-group-text btn btn-primary" >Xb</span>
           <input type="number" formControlName="xb" class="form-control">
         </div>
-        <div class="col" *ngIf="form.value.tpFormula == '3'">
-          <label>Xn</label>
+        
+        <div class="input-group mb-3 p-2 bg-light border" *ngIf="form.value.tpFormula == '3'">
+          <span class="input-group-text btn btn-primary" >Xn</span>
           <input type="number" formControlName="xn" class="form-control">
         </div>
-      </div>
-      <button (click)="submit()" class="btn btn-primary">Enviar</button>
+        
+      
+      <div class="d-grid gap-2 col-6 mx-auto">
+          <button (click)="submit()" class="btn btn-outline-dark position-relative">Enviar</button>
+        </div>
     </form>
   </div>
 
+  <div class="container">
   <h3 *ngIf="!error">resultado: {{result}}</h3>
   <h3 *ngIf="error">error: {{msg}}</h3>
 
-
-  <table class="table table-primary table-bordered" *ngIf="response && form.value.tpFormula == '1' && !error">
+  
+  <table class="table table-dark table-striped" *ngIf="response && form.value.tpFormula == '1' && !error">
     <thead>
     <th>it</th>
     <th>xi</th>
@@ -94,7 +102,7 @@
     </tbody>
   </table>
 
-  <table class="table table-primary table-bordered" *ngIf="response && form.value.tpFormula == '2' && !error">
+  <table class="table table-dark table-striped" *ngIf="response && form.value.tpFormula == '2' && !error">
     <thead>
     <th>it</th>
     <th>xa</th>
@@ -117,7 +125,7 @@
     </tbody>
   </table>
 
-  <table class="table table-primary table-bordered" *ngIf="response && form.value.tpFormula == '3' && !error">
+  <table class="table table-dark table-striped" *ngIf="response && form.value.tpFormula == '3' && !error">
     <thead>
     <th>it</th>
     <th>xn</th>
