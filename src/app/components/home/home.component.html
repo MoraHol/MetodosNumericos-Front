@@ -3,45 +3,75 @@
   <div class="row">
     <form [formGroup]="form">
       <div class="col">
-        <label>Tipo de material</label>
-        <select formControlName="tpMaterial" class="form-control">
-          <option [value]="0.03">Acero (Tubos soldados)</option>
-          <option [value]="0.0024">Acero (Tubos estirados)</option>
-          <option [value]="0.06">Acero galvanizado</option>
-          <option [value]="0.015">Cobre o laton</option>
-        </select>
+        <div class="form-group">
+          <label>Tipo de material</label>
+          <select formControlName="tpFormula" class="form-control">
+            <option [value]="1">Biseccion</option>
+            <option [value]="2">falsa posicion </option>
+            <option [value]="3">Newton Rapson</option>
+          </select>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label>Tipo de material</label>
+          <select formControlName="tpMaterial" class="form-control">
+            <option [value]="0.03">Acero (Tubos soldados)</option>
+            <option [value]="0.0024">Acero (Tubos estirados)</option>
+            <option [value]="0.06">Acero galvanizado</option>
+            <option [value]="0.015">Cobre o laton</option>
+          </select>
+        </div>
       </div>
 
       <div class="col">
         <div>
-          <label>Diametro del tubo</label>
+          <label>Diametro del tubo (mm)</label>
           <input type="number" formControlName="diametro" class="form-control">
 
         </div>
         <div class="col">
-          <label>Caudal del flujo</label>
+          <label>Caudal del flujo (m3/s)</label>
           <input type="number" formControlName="caudal" class="form-control">
+        </div>
+        <div class="col">
+          <label>Velocidad del fluido (m/s)</label>
+          <input type="number" formControlName="velocidad" class="form-control">
         </div>
         <div class="col">
           <label>Error tolerado</label>
           <input type="number" formControlName="error" class="form-control">
         </div>
-        <div class="col">
+        <div class="col" *ngIf="form.value.tpFormula == '1'">
           <label>Xi</label>
           <input type="number" formControlName="xi" class="form-control">
         </div>
-        <div class="col">
+        <div class="col" *ngIf="form.value.tpFormula == '1'">
           <label>Xu</label>
           <input type="number" formControlName="xu" class="form-control">
+        </div>
+        <div class="col" *ngIf="form.value.tpFormula == '2'">
+          <label>Xa</label>
+          <input type="number" formControlName="xa" class="form-control">
+        </div>
+        <div class="col" *ngIf="form.value.tpFormula == '2'">
+          <label>Xb</label>
+          <input type="number" formControlName="xb" class="form-control">
+        </div>
+        <div class="col" *ngIf="form.value.tpFormula == '3'">
+          <label>Xn</label>
+          <input type="number" formControlName="xn" class="form-control">
         </div>
       </div>
       <button (click)="submit()" class="btn btn-primary">Enviar</button>
     </form>
   </div>
 
-  <h3>resultado: {{result}}</h3>
+  <h3 *ngIf="!error">resultado: {{result}}</h3>
+  <h3 *ngIf="error">error: {{msg}}</h3>
 
-  <table class="table table-primary table-bordered" *ngIf="response">
+
+  <table class="table table-primary table-bordered" *ngIf="response && form.value.tpFormula == '1' && !error">
     <thead>
     <th>it</th>
     <th>xi</th>
@@ -63,4 +93,48 @@
     </tr>
     </tbody>
   </table>
+
+  <table class="table table-primary table-bordered" *ngIf="response && form.value.tpFormula == '2' && !error">
+    <thead>
+    <th>it</th>
+    <th>xa</th>
+    <th>xb</th>
+    <th>xr</th>
+    <th>Fx(xa)</th>
+    <th>Fx(xb)</th>
+    <th>Fx(xa) * Fx(xr)</th>
+    </thead>
+    <tbody>
+    <tr *ngFor="let iter of iterations;last as i">
+      <td>{{iter.it}}</td>
+      <td>{{iter.xa}}</td>
+      <td>{{iter.xb}}</td>
+      <td [ngClass]="{'last': i }">{{iter.xr}}</td>
+      <td>{{iter.fxa}}</td>
+      <td>{{iter.fxr}}</td>
+      <td>{{iter.fxaFxr}}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <table class="table table-primary table-bordered" *ngIf="response && form.value.tpFormula == '3' && !error">
+    <thead>
+    <th>it</th>
+    <th>xn</th>
+    <th>Fxn</th>
+    <th>Fdxn</th>
+    <th>xn1</th>
+    </thead>
+    <tbody>
+    <tr *ngFor="let iter of iterations;last as i">
+      <td>{{iter.it}}</td>
+      <td>{{iter.xn}}</td>
+      <td>{{iter.fxn}}</td>
+      <td >{{iter.fdxn}}</td>
+      <td [ngClass]="{'last': i }">{{iter.xn1}}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div id="plot"></div>
 </div>

@@ -6,4 +6,12 @@ export class Iteration{
   fxi: number;
   fxr: number;
   fxiFxr: number;
+  xn;
+  fxn;
+  fdxn;
+  xn1;
+  xa;
+  xb;
+  fxa;
+  fxaFxr;
 }
